@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ticket System{% endblock %}</title>
+    
+    {# Tailwind CSS CDN #}
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    {# Custom Styles #}
+    <style>
+        @keyframes slide-in {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .animate-slide-in {
+            animation: slide-in 0.3s ease-out;
+        }
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.2s ease-out;
+        }
+        
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gray-50">
+    {# Navigation #}
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-8">
+                    <a href="/dashboard" class="flex items-center gap-2">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span class="text-xl font-bold text-gray-800">Ticket System</span>
+                    </a>
+                    
+                    {% if app.session.get('user_id') %}
+                    <div class="flex gap-4">
+                        <a href="/dashboard" class="text-gray-700 hover:text-purple-600 font-medium transition-colors
+                            {% if current_page == 'dashboard' %}text-purple-600 border-b-2 border-purple-600{% endif %}">
+                            Dashboard
+                        </a>
+                        <a href="/tickets" class="text-gray-700 hover:text-purple-600 font-medium transition-colors
+                            {% if current_page == 'tickets' %}text-purple-600 border-b-2 border-purple-600{% endif %}">
+                            Tickets
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if app.session.get('user_id') %}
+                <div class="flex items-center gap-4">
+                    <span class="text-gray-600">{{ app.session.get('user_email') }}</span>
+                    <a href="/logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        Logout
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {# Main Content #}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
