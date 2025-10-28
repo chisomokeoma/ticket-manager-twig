@@ -157,7 +157,7 @@ $dotenv->safeLoad(); // Use safeLoad() to avoid throwing an error if .env doesn'
 // return $pdo;
 
 
-<?php
+// <?php
 // File: config/database.php
 
 require_once __DIR__ . '/../vendor/autoload.php';
